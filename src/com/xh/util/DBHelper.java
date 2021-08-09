@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * @author 贾大大
+ */
 public class DBHelper {
 
     static DruidDataSource dataSource;
