@@ -15,6 +15,7 @@ public class UserDao {
     //增删改查
     //查询 selece * from t_user;
 
+
     //步骤1 创建出 链接对象
 
     public List<User> selectAll() {
@@ -147,6 +148,39 @@ public class UserDao {
         return i;
     }
 
+    public User login (String username,String password){
+        User user = null;
+        //1.创建链接
+        Connection connection = DBHelper.getConnection();
+        //2.sql
+        String sql = "select * from t_user where username=? and password=?";
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,username);
+            ps.setString(2,password);
+            //4.
+            rs=ps.executeQuery();
+            if (rs.next()){
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setCreate_time(rs.getString("create_time"));
+                user.setImg(rs.getString("img"));
+                user.setIs_del(rs.getInt("is_del"));
+                user.setModify_time(rs.getString("modify_time"));
+                user.setPassword(rs.getString("password"));
+                user.setReal_name(rs.getString("real_name"));
+                user.setType(rs.getInt("type"));
+                user.setUsername(rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
     public static void main(String[] args) {
         UserDao dao = new UserDao();
 
@@ -184,7 +218,7 @@ public class UserDao {
         System.out.println("i = " + i);*/
 
         //删除
-        int i = dao.delete(1);
-        System.out.println("i = " + i);
+//        int i = dao.delete(1);
+//        System.out.println("i = " + i);
     }
 }
